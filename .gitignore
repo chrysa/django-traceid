@@ -19,6 +19,9 @@ coverage.xml
 # CodeGraph index
 .codegraph/
 
+# graphify local hook output
+graphify-out/
+
 # Editors / OS
 .idea/
 .vscode/
