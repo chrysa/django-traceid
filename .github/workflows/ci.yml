@@ -1,0 +1,106 @@
+---
+name: CI
+
+on:
+    pull_request:
+        branches: [main]
+    push:
+        branches:
+            - main
+            - "feat/**"
+            - "fix/**"
+            - "chore/**"
+            - "ci/**"
+    workflow_dispatch:
+
+permissions:
+    checks: write
+    contents: read
+    pull-requests: write
+    statuses: write
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    pre-commit:
+        name: Pre-commit checks
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: chrysa/github-actions/python-setup@v1
+              with:
+                  python-version: "3.14"
+                  cache: pip
+
+            - uses: pre-commit/action@v3.0.1
+              env:
+                  SKIP: no-commit-to-branch
+
+    lint:
+        name: Ruff + Mypy
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup environment
+              uses: chrysa/github-actions/tool-setup@v1
+              with:
+                  python-version: "3.14"
+                  extras: "dev"
+
+            - name: Ruff checks
+              uses: chrysa/github-actions/ruff-check@v1
+              with:
+                  python-version: "3.14"
+                  latest-python: "3.14"
+                  sources: "django_traceid tests"
+
+            - name: Mypy checks
+              uses: chrysa/github-actions/mypy-check@v1
+              with:
+                  python-version: "3.14"
+                  latest-python: "3.14"
+                  config-file: "pyproject.toml"
+                  sources: "django_traceid"
+
+    test:
+        name: Docker tests
+        needs: lint
+        runs-on: ubuntu-latest
+        timeout-minutes: 20
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Run tests via Docker
+              run: make docker-test
+
+    sonar:
+        name: SonarCloud
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        needs: test
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        permissions:
+            contents: read
+            pull-requests: read
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - uses: chrysa/github-actions/sonar-scan-python@v1.1.0
+              with:
+                  python-version: "3.14"
+                  sonar-token: ${{ secrets.SONAR_TOKEN }}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  project-key: chrysa_django-traceid
+                  organization: chrysa
+                  project-name: django-traceid
+                  sources: .
+                  tests: tests
+                  coverage-report: coverage.xml
