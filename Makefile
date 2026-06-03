@@ -1,10 +1,14 @@
-.PHONY: install test lint typecheck format build clean
+.PHONY: install test docker-test lint typecheck format build clean
 
 install:
 	pip install -e ".[dev]"
 
 test:
 	pytest
+
+docker-test:
+	docker build -f Dockerfile.test -t django-traceid-test .
+	docker run --rm django-traceid-test
 
 lint:
 	ruff check .
