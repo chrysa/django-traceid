@@ -63,3 +63,21 @@ def test_sentry_tag_enabled_does_not_crash(client):
     # sentry_sdk is not installed in the test env: the import guard must swallow it.
     resp = client.get("/echo/")
     assert resp.status_code == 200
+
+
+@override_settings(TRACEID={"SENTRY_TAG": True})
+def test_sentry_tag_set_when_sdk_present(client, monkeypatch):
+    # Inject a stand-in sentry_sdk so the import guard succeeds and the tag
+    # is set with the request's trace id.
+    import sys
+    import types
+
+    calls: list[tuple[str, str]] = []
+    fake_sentry = types.ModuleType("sentry_sdk")
+    fake_sentry.set_tag = lambda key, value: calls.append((key, value))  # type: ignore[attr-defined]
+    monkeypatch.setitem(sys.modules, "sentry_sdk", fake_sentry)
+
+    resp = client.get("/echo/")
+
+    assert resp.status_code == 200
+    assert calls == [("trace_id", resp["X-Request-ID"])]
