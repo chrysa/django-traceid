@@ -22,9 +22,13 @@ ORM → background jobs → pub/sub) with a single query in Loki, Kibana or Sent
 
 ```bash
 pip install django-traceid
-# optional Sentry tagging:
-pip install "django-traceid[sentry]"
 ```
+
+> **Sentry tagging is optional and dependency-free.** django-traceid never
+> bundles `sentry-sdk`. In a project that already uses Sentry, just set
+> `TRACEID["SENTRY_TAG"] = True`; the middleware tags the current scope using
+> the host project's own `sentry-sdk` (imported lazily, silently skipped if
+> absent). Nothing to install here.
 
 ## Setup (HTTP — Phase 1)
 
@@ -74,7 +78,7 @@ TRACEID = {
     "LOG_RECORD_ATTR": "trace_id",          # LogRecord attribute name
     "TRUST_INCOMING_HEADER": True,          # reuse client-supplied id
     "INCOMING_MAX_LENGTH": 200,             # reject longer (log-injection guard)
-    "SENTRY_TAG": False,                    # set sentry_sdk tag when installed
+    "SENTRY_TAG": False,                    # tag host project's sentry_sdk scope (if present)
 }
 ```
 

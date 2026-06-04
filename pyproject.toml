@@ -31,7 +31,6 @@ classifiers = [
 dependencies = ["Django>=4.2"]
 
 [project.optional-dependencies]
-sentry = ["sentry-sdk>=1.0"]
 dev = [
     "pytest>=8.0",
     "pytest-django>=4.8",
