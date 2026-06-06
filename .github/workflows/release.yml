@@ -17,8 +17,18 @@ concurrency:
     cancel-in-progress: false
 
 jobs:
+    # Lint gate: replays the full pre-commit suite (ruff + mypy at pre-push)
+    # once per release. Lint no longer runs on every PR/push (see ci.yml).
+    lint:
+        name: Lint gate (pre-commit replay)
+        uses: chrysa/github-actions/.github/workflows/lint-python.yml@main
+        with:
+            python-version: "3.14"
+            extras: "dev"
+
     version:
         name: Calculate version
+        needs: lint
         runs-on: ubuntu-latest
         timeout-minutes: 5
         outputs:
