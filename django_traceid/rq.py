@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import functools
 from collections.abc import Callable
-from typing import Any
+from typing import Any, cast
 
 from .context import get_trace_id, reset_trace_id, set_trace_id
 
@@ -58,7 +58,7 @@ def trace_aware[F: Callable[..., Any]](func: F) -> F:
         finally:
             reset_trace_id(token)
 
-    return wrapper  # type: ignore[return-value]
+    return cast(F, wrapper)
 
 
 def restore_trace_context(trace_id: str | None) -> Any:

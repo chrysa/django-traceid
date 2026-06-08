@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Callable
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, cast
 
 from .conf import traceid_settings
 from .context import reset_trace_id, set_trace_id
@@ -37,7 +37,7 @@ class TraceIdMiddleware:
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
         trace_id = self._incoming(request) or self._generate()
-        request.trace_id = trace_id  # type: ignore[attr-defined]
+        cast(Any, request).trace_id = trace_id
         token = set_trace_id(trace_id)
         if self._sentry_tag:
             _tag_sentry(trace_id)
