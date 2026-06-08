@@ -11,11 +11,12 @@ Three wiring points make every log line carry the same trace id:
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "demo-insecure-key-not-for-production"  # noqa: S105
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "demo-insecure-key-not-for-production")
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
 

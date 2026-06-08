@@ -74,7 +74,7 @@ def test_sentry_tag_set_when_sdk_present(client, monkeypatch):
 
     calls: list[tuple[str, str]] = []
     fake_sentry = types.ModuleType("sentry_sdk")
-    fake_sentry.set_tag = lambda key, value: calls.append((key, value))  # type: ignore[attr-defined]
+    fake_sentry.set_tag = lambda key, value: calls.append((key, value))
     monkeypatch.setitem(sys.modules, "sentry_sdk", fake_sentry)
 
     resp = client.get("/echo/")

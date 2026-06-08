@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-SECRET_KEY = "test-only-not-secret"  # noqa: S105 — static key for the test settings module
+import os
+
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "test-only-not-secret")
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
