@@ -73,7 +73,8 @@ exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "raise NotImplementedE
 line-length = 120
 indent-width = 4
 target-version = "py312"
-extend-exclude = ["build/*", "dist/*", "*.egg-info/*", ".venv/*", "venv/*"]
+# examples/ holds illustrative demo Django apps, not library code.
+extend-exclude = ["build/*", "dist/*", "*.egg-info/*", ".venv/*", "venv/*", "examples"]
 
 [tool.ruff.lint]
 # Aligned with chrysa shared-standards ruff rule set.
