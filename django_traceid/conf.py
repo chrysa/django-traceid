@@ -87,7 +87,7 @@ class TraceIdSettings:
 traceid_settings = TraceIdSettings()
 
 
-@receiver(setting_changed)
+@receiver(setting_changed)  # type: ignore[untyped-decorator]
 def _reload_on_change(*, setting: str, **_kwargs: Any) -> None:
     if setting == "TRACEID":
         traceid_settings.reload()
