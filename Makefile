@@ -25,8 +25,9 @@ format: ## Auto-format code
 	ruff format .
 	ruff check --fix .
 
-typecheck: ## Run mypy type checking
-	mypy django_traceid
+typecheck: ## Run mypy type checking (Docker)
+	docker build -f Dockerfile.typecheck -t django-traceid-typecheck .
+	docker run --rm django-traceid-typecheck
 
 docker-test: ## Run tests in Docker (CI-compatible)
 	docker build -f Dockerfile.test -t django-traceid-test .
