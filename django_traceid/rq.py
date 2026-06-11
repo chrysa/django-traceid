@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import functools
 from collections.abc import Callable
-from typing import Any, cast
+from typing import Any, Protocol, cast
 
 from .context import get_trace_id, reset_trace_id, set_trace_id
 
@@ -29,7 +29,17 @@ __all__ = ["TRACE_KWARG", "enqueue_with_trace", "restore_trace_context", "trace_
 TRACE_KWARG = "_trace_id"
 
 
-def enqueue_with_trace(queue: Any, func: Callable[..., Any], *args: Any, **kwargs: Any) -> Any:
+class SupportsEnqueue(Protocol):
+    """Minimal queue interface required by :func:`enqueue_with_trace`.
+
+    Captures the single method the helper depends on, so any RQ-like queue is
+    accepted without importing RQ (no hard dependency).
+    """
+
+    def enqueue(self, func: Callable[..., Any], *args: Any, **kwargs: Any) -> Any: ...
+
+
+def enqueue_with_trace(queue: SupportsEnqueue, func: Callable[..., Any], *args: Any, **kwargs: Any) -> Any:
     """Enqueue ``func`` on ``queue`` carrying the current trace id.
 
     The id is injected as the ``_trace_id`` kwarg; pair this with the
@@ -40,7 +50,7 @@ def enqueue_with_trace(queue: Any, func: Callable[..., Any], *args: Any, **kwarg
     return queue.enqueue(func, *args, **kwargs)
 
 
-def trace_aware[F: Callable[..., Any]](func: F) -> F:
+def trace_aware[**P, R](func: Callable[P, R]) -> Callable[P, R]:
     """Restore the propagated trace id for the duration of the call.
 
     Pops ``_trace_id`` from kwargs (so the wrapped function keeps its real
@@ -48,8 +58,8 @@ def trace_aware[F: Callable[..., Any]](func: F) -> F:
     """
 
     @functools.wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> Any:
-        trace_id = kwargs.pop(TRACE_KWARG, None)
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        trace_id = cast("str | None", kwargs.pop(TRACE_KWARG, None))
         if trace_id is None:
             return func(*args, **kwargs)
         token = set_trace_id(trace_id)
@@ -58,7 +68,7 @@ def trace_aware[F: Callable[..., Any]](func: F) -> F:
         finally:
             reset_trace_id(token)
 
-    return cast(F, wrapper)
+    return wrapper
 
 
 def restore_trace_context(trace_id: str | None) -> Any:
