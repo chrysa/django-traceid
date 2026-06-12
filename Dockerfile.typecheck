@@ -8,9 +8,9 @@ WORKDIR /app
 RUN pip install --no-cache-dir --upgrade pip setuptools>=70 wheel
 
 COPY pyproject.toml README.md ./
-COPY django_traceid/ ./django_traceid/
+COPY src/ ./src/
 COPY tests/ ./tests/
 
 RUN pip install --no-cache-dir -e ".[dev]"
 
-CMD ["mypy", "django_traceid"]
+CMD ["mypy", "src/django_traceid"]

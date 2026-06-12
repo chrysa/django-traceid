@@ -46,7 +46,7 @@ Repository = "https://github.com/chrysa/django-traceid"
 Issues = "https://github.com/chrysa/django-traceid/issues"
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 include = ["django_traceid*"]
 
 [tool.setuptools.package-data]
@@ -54,7 +54,7 @@ django_traceid = ["py.typed"]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
-pythonpath = ["."]
+pythonpath = [".", "src"]
 testpaths = ["tests"]
 addopts = "-v --tb=short --cov=django_traceid --cov-report=term-missing --cov-fail-under=85"
 python_files = "test_*.py"

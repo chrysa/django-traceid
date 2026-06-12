@@ -6,6 +6,8 @@ without knowing the internal module layout.
 
 from __future__ import annotations
 
+from importlib.metadata import PackageNotFoundError, version
+
 from .context import (
     generate_trace_id,
     get_trace_id,
@@ -23,4 +25,7 @@ __all__ = [
     "trace_context",
 ]
 
-__version__ = "0.1.0"
+try:
+    __version__ = version("django-traceid")
+except PackageNotFoundError:  # editable install / not installed
+    __version__ = "0.0.0+unknown"
