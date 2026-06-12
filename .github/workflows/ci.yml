@@ -33,7 +33,7 @@ jobs:
         runs-on: ubuntu-latest
         timeout-minutes: 20
         steps:
-            - uses: actions/checkout@v6.0.2
+            - uses: actions/checkout@v6.0.3
 
             - name: Run tests via Docker
               run: make docker-test
@@ -48,7 +48,7 @@ jobs:
             contents: read
             pull-requests: read
         steps:
-            - uses: actions/checkout@v6.0.2
+            - uses: actions/checkout@v6.0.3
               with:
                   fetch-depth: 0
 
