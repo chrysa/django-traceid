@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
     ci:
-        uses: chrysa/github-actions/.github/workflows/ci-python.yml@main
+        uses: chrysa/github-actions/.github/workflows/ci-python.yml@v1.2.0
         with:
             package: django_traceid
             sources: "django_traceid tests"
