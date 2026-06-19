@@ -64,3 +64,7 @@ All checks run via `make` or `pre-commit` only — never invoke linters/tests di
 Shared skills from `shared-standards/.claude/skills/` — load `testing-pytest/SKILL.md` when writing tests.
 
 <!-- ui-ux-skill: not-applicable -- reason: backend lib/scaffolder/gateway, no human-facing surface -->
+
+<!-- chrysa:standards-import:start -->
+@.chrysa/STANDARDS.md
+<!-- chrysa:standards-import:end -->
