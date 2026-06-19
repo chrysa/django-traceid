@@ -7,7 +7,7 @@ name = "django-traceid"
 version = "0.1.0"
 description = "Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logging, background jobs)"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 license = { text = "MIT" }
 authors = [{ name = "Anthony Gréau", email = "greau.anthony@gmail.com" }]
 keywords = ["django", "logging", "tracing", "trace-id", "request-id", "observability", "loki"]
@@ -22,8 +22,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Topic :: System :: Logging",
     "Typing :: Typed",
@@ -84,7 +82,7 @@ select = ["E", "W", "F", "I", "N", "UP", "B", "C4", "C90", "S", "DJ", "TID", "FU
 "tests/*" = ["S101"] # asserts are expected in tests
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.14"
 strict = true
 ignore_missing_imports = true
 exclude = ["tests/"]
