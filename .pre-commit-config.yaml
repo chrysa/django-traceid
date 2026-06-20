@@ -33,6 +33,18 @@ repos:
     pass_filenames: false
     stages:
     - pre-push
+  - id: gitversion-canonical-drift
+    name: GitVersion.yml canonical drift
+    entry: scripts/check-canonical-drift.sh GitVersion.yml templates/GitVersion.yml
+    language: system
+    pass_filenames: false
+    files: ^(GitVersion\.yml|templates/GitVersion\.yml)$
+  - id: cliff-canonical-drift
+    name: cliff.toml canonical drift
+    entry: scripts/check-canonical-drift.sh cliff.toml templates/cliff.toml
+    language: system
+    pass_filenames: false
+    files: ^(cliff\.toml|templates/cliff\.toml)$
 - repo: https://github.com/chrysa/pre-commit-tools
   rev: v0.1.1-94
   hooks:
