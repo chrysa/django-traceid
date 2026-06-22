@@ -64,6 +64,9 @@ python_functions = "test_*"
 [tool.coverage.run]
 source = ["django_traceid"]
 omit = ["**/tests/**"]
+# Emit repo-relative file paths in coverage.xml so SonarCloud can map them
+# to source files (otherwise paths are absolute and resolve to nothing).
+relative_files = true
 
 [tool.coverage.report]
 fail_under = 85
