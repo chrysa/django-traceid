@@ -3,11 +3,11 @@
 #
 # Usage: copy to .github/workflows/ci.yml. The applier
 # (scripts/apply-repo-standard.sh) substitutes the ${...} placeholders:
-#   target      import package / source dir       (e.g. django_pytest)
-#   target tests      ruff sources, space-separated     (e.g. "django_pytest tests")
+#   django_traceid      import package / source dir       (e.g. django_pytest)
+#   django_traceid tests      ruff sources, space-separated     (e.g. "django_pytest tests")
 #   tests        test dir                          (e.g. tests)
-#   target    repo name                         (e.g. django-pytest)
-#   chrysa_target  SonarCloud project key            (e.g. chrysa_django-pytest)
+#   django-traceid    repo name                         (e.g. django-pytest)
+#   chrysa_django-traceid  SonarCloud project key            (e.g. chrysa_django-pytest)
 #
 # ⚠️ This file lives in workflows/ (NOT .github/workflows/) — it is a copy-to-use
 #    template, not a reusable `uses:` workflow.
@@ -77,6 +77,6 @@ jobs:
                   project-key: chrysa_django-traceid
                   organization: chrysa
                   project-name: django-traceid
-                  sources: src
+                  sources: django_traceid
                   tests: tests
                   coverage-report: coverage.xml
