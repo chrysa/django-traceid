@@ -1,5 +1,5 @@
 {
-  "_comment": "Claude Code settings template \u2014 copy to .claude/settings.json and customize",
+  "_comment": "Claude Code settings template — copy to .claude/settings.json and customize",
   "autoCompact": true,
   "autoCompactThreshold": 0.85,
   "hooks": {
@@ -53,6 +53,14 @@
         "matcher": "*",
         "name": "frustration-detection",
         "timeout": 5000
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/ape/ape_hook.py --spec .claude/ape/ape-transform-v2.md"
+          }
+        ]
       }
     ]
   },
