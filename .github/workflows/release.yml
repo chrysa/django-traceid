@@ -36,7 +36,7 @@ jobs:
             preReleaseTag: ${{ steps.gitversion.outputs.preReleaseTag }}
             should-release: ${{ steps.tag-check.outputs.should-release }}
         steps:
-            - uses: actions/checkout@v7.0.0
+            - uses: actions/checkout@v7.0.1
               with:
                   fetch-depth: 0
 
@@ -64,7 +64,7 @@ jobs:
         runs-on: ubuntu-latest
         timeout-minutes: 20
         steps:
-            - uses: actions/checkout@v7.0.0
+            - uses: actions/checkout@v7.0.1
               with:
                   fetch-depth: 0
                   token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
