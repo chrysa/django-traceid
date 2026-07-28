@@ -1,5 +1,6 @@
 default_language_version:
   python: python3.14
+exclude: ^\.claude/
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
@@ -16,7 +17,7 @@ repos:
     - main
     id: no-commit-to-branch
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.15.18
+  rev: v0.16.0
   hooks:
   - id: ruff-format
   - id: ruff-check
@@ -34,7 +35,7 @@ repos:
     stages:
     - pre-push
 - repo: https://github.com/chrysa/pre-commit-tools
-  rev: v0.1.1-95
+  rev: v0.1.1-98
   hooks:
   - id: makefile-check
   - exclude: ^(\.github/|workflows/|templates/)
@@ -55,8 +56,11 @@ repos:
   - id: regression-gate
     stages:
     - pre-push
+  - id: claude-skill-frontmatter
+  - id: claude-agent-frontmatter
+  - id: claude-mcp-config
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.48.0
+  rev: v0.49.1
   hooks:
   - args:
     - --fix
@@ -64,7 +68,7 @@ repos:
     stages:
     - manual
 - repo: https://github.com/gitleaks/gitleaks
-  rev: v8.30.0
+  rev: v8.30.1
   hooks:
   - id: gitleaks
 - repo: https://github.com/compilerla/conventional-pre-commit
@@ -84,3 +88,7 @@ repos:
     - perf
     - revert
     - ci
+- repo: https://github.com/chrysa/guideline-checker
+  rev: v1.15.4
+  hooks:
+  - id: guideline-check
