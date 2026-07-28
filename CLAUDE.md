@@ -29,15 +29,9 @@ tests/           # pytest-django suite
 
 ## Conventions
 
-- Language: English — all code, comments, docs, and config files.
-- Commits: Conventional Commits (`feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`).
 - Branches: `feat/`, `fix/`, `chore/`, `docs/`. Default branch: `main`.
 - Supports Python 3.12+ (library); CI tests on 3.14. `requires-python` floor is intentional.
-
-## Standards
-
-- Max function lines: 50 · Max file lines: 500 · Lint warnings: 0
-- Test coverage: ≥ 85% · `mypy --strict` clean · full type annotations on the public API
+- `mypy --strict` clean · full type annotations on the public API.
 
 ## Setup
 
@@ -56,12 +50,6 @@ All checks run via `make` or `pre-commit` only — never invoke linters/tests di
 
 - Runs on push to `main` and on PRs (Python 3.14). CI must pass before merging.
 - SonarCloud analysis configured in CI.
-
-## Skills
-
-- `dockerfile-multistage/SKILL.md` — 4-stage Python 3.14 containers (load when editing Dockerfile)
-
-Shared skills from `shared-standards/.claude/skills/` — load `testing-pytest/SKILL.md` when writing tests.
 
 <!-- ui-ux-skill: not-applicable -- reason: backend lib/scaffolder/gateway, no human-facing surface -->
 
