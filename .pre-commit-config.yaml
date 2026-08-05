@@ -68,6 +68,7 @@ repos:
     exclude: (^|/)tests?/
   - id: python-mutable-default
   - id: python-dispatch-ladder
+  - id: dockerfile-no-latest
 - repo: https://github.com/igorshubovych/markdownlint-cli
   rev: v0.49.1
   hooks:
