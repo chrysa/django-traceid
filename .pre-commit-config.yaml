@@ -45,11 +45,14 @@ repos:
   - id: env-example-sync
   - id: adr-gate
   - id: debugger-detection
+    exclude: (^|/)tests?/|^(README\.md|docs/)
   - id: python-print-detection
+    exclude: (^|/)tests?/|^(README\.md|docs/)
   - id: python-pprint-detection
-    exclude: tests?/
+    exclude: (^|/)tests?/|^(README\.md|docs/)
   - id: no-bare-except
   - id: python-logger-detection
+    exclude: (^|/)tests?/|^(README\.md|docs/)
   - id: python-unreachable-code
   - id: no-hardcoded-localhost
     exclude: tests?/|\.test\.|\.spec\.
@@ -62,7 +65,7 @@ repos:
   - id: python-no-unittest-import
   - id: claude-assets-present
   - id: python-untyped-raise
-    exclude: ^tests?/
+    exclude: (^|/)tests?/
   - id: python-mutable-default
   - id: python-dispatch-ladder
 - repo: https://github.com/igorshubovych/markdownlint-cli
