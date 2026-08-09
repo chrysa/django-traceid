@@ -167,7 +167,7 @@ class QualityGate:
         run that never finished is exactly the green this gate exists to refuse.
         """
         try:
-            result = subprocess.run(  # noqa: S603 -- executable resolved via shutil.which; argv from internal gate specs, no untrusted input
+            result = subprocess.run(
                 [executable, *argv[1:]],
                 capture_output=True,
                 text=True,
