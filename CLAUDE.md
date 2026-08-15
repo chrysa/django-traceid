@@ -14,16 +14,17 @@ no monkey-patching. Every log line emitted while handling a request carries the 
 
 ## Layout
 
-Flat package `django_traceid/` (~90 lines of runtime code, 5 moving parts):
+`src/` layout, package `src/django_traceid/` (~190 statements of runtime code, 6 moving parts):
 
 ```
-django_traceid/
+src/django_traceid/
   middleware.py  # extracts/generates X-Request-ID, sets it in context, echoes on response
+                 # (sync + async capable; keeps the id bound through streaming bodies)
   context.py     # contextvar holding the current trace_id
   filters.py     # logging filter that injects trace_id into every record
   conf.py        # settings surface (header name, propagation toggles)
   apps.py        # AppConfig wiring
-  rq.py          # optional: trace_id propagation across RQ background jobs
+  rq.py          # optional: trace_id propagation across RQ/Celery/thread boundaries
 tests/           # pytest-django suite
 ```
 
