@@ -126,4 +126,11 @@ def _tag_sentry(trace_id: str) -> None:
         import sentry_sdk
     except ImportError:
         return
-    sentry_sdk.set_tag("trace_id", trace_id)
+    # Tag the per-request isolation scope (sentry-sdk >= 2.0) so the id does not
+    # leak into other requests sharing the worker; fall back to the global tag on
+    # older SDKs.
+    get_isolation_scope = getattr(sentry_sdk, "get_isolation_scope", None)
+    if get_isolation_scope is not None:
+        get_isolation_scope().set_tag("trace_id", trace_id)
+    else:
+        sentry_sdk.set_tag("trace_id", trace_id)
