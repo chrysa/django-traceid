@@ -5,51 +5,57 @@
   "hooks": {
     "Notification": [
       {
-        "command": "notify-send 'Claude Code' '$CLAUDE_NOTIFICATION'",
-        "name": "notify-user-input"
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notify-send 'Claude Code' '$CLAUDE_NOTIFICATION'"
+          }
+        ]
       }
     ],
     "PostToolUse": [
       {
-        "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/verifiable-thresholds.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
         "matcher": "Write|Edit|MultiEdit",
-        "name": "verifiable-thresholds",
-        "timeout": 10000
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/verifiable-thresholds.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
+            "timeout": 10000
+          }
+        ]
       }
     ],
     "PreCompact": [
       {
-        "command": "~/.claude/hooks/pre-compact.sh",
-        "name": "pre-compact",
-        "timeout": 10000
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh -c 'f=\"$HOME/.claude/hooks/pre-compact.sh\"; [ ! -x \"$f\" ] || \"$f\"'",
+            "timeout": 10000
+          }
+        ]
       }
     ],
     "PreToolUse": [
       {
-        "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/secret-scanner.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
         "matcher": "Bash",
-        "name": "secret-scanner",
-        "timeout": 10000,
         "hooks": [
           {
-            "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/check-no-env-files.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
-            "name": "check-no-env-files",
-            "timeout": 5000,
-            "type": "command"
+            "type": "command",
+            "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/secret-scanner.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
+            "timeout": 10000
           }
         ]
       },
       {
-        "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/circuit-breaker.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
         "matcher": "Bash",
-        "name": "circuit-breaker",
-        "timeout": 5000,
         "hooks": [
           {
-            "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/check-no-env-files.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
-            "name": "check-no-env-files",
-            "timeout": 5000,
-            "type": "command"
+            "type": "command",
+            "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/circuit-breaker.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
+            "timeout": 5000
           }
         ]
       },
@@ -71,10 +77,14 @@
     ],
     "UserPromptSubmit": [
       {
-        "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/frustration-detection.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
         "matcher": "*",
-        "name": "frustration-detection",
-        "timeout": 5000
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh -c 'f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/frustration-detection.cjs\"; [ ! -f \"$f\" ] || node \"$f\"'",
+            "timeout": 5000
+          }
+        ]
       },
       {
         "hooks": [
