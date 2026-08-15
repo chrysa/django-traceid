@@ -32,12 +32,12 @@ typecheck: ## Run mypy type checking (Docker)
 docker-test: ## Run tests in Docker (CI-compatible)
 	@# Pre-create coverage.xml as a file so the bind-mount maps file->file
 	@# (Docker auto-creates a *directory* for a missing bind source, which
-	@# then makes coverage's open(path,"w") fail). -T disables the pseudo-TTY
-	@# so this also runs in CI / non-interactive contexts.
+	@# then makes coverage's open(path,"w") fail). No -t is allocated, so this
+	@# also runs in CI / non-interactive contexts.
 	@rm -rf coverage.xml
 	@touch coverage.xml
 	docker build -f Dockerfile.test -t django-traceid-test .
-	docker run --rm -T -v "$(PWD)/coverage.xml:/app/coverage.xml" django-traceid-test
+	docker run --rm -v "$(PWD)/coverage.xml:/app/coverage.xml" django-traceid-test
 
 build: ## Build wheel distribution package
 	python -m build

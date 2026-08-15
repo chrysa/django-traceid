@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 
 import pytest
-from django.test import Client, override_settings
+from django.test import AsyncClient, Client, override_settings
 
 from django_traceid import get_trace_id
 
@@ -44,6 +44,31 @@ def test_rejects_overlong_incoming_header(client):
 def test_context_cleared_after_request(client):
     client.get("/echo/")
     assert get_trace_id() is None
+
+
+def test_streaming_response_keeps_id_until_body_consumed(client):
+    """The id read inside the generator must match the echoed header (streaming bug)."""
+    resp = client.get("/stream/")
+    rid = resp["X-Request-ID"]
+    body = b"".join(resp.streaming_content).decode()
+    assert body == rid
+    assert re.fullmatch(r"[0-9a-f]{32}", rid)
+
+
+def test_streaming_response_clears_context_after_consumption(client):
+    resp = client.get("/stream/")
+    b"".join(resp.streaming_content)
+    assert get_trace_id() is None
+
+
+def test_async_middleware_binds_id():
+    """Under an async handler the middleware still binds/echoes the id (ASGI path)."""
+    from asgiref.sync import async_to_sync
+
+    resp = async_to_sync(AsyncClient().get)("/aecho/")
+    rid = resp["X-Request-ID"]
+    assert resp.content.decode() == rid
+    assert re.fullmatch(r"[0-9a-f]{32}", rid)
 
 
 @override_settings(TRACEID={"TRUST_INCOMING_HEADER": False})
