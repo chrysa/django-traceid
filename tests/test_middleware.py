@@ -106,3 +106,29 @@ def test_sentry_tag_set_when_sdk_present(client, monkeypatch):
 
     assert resp.status_code == 200
     assert calls == [("trace_id", resp["X-Request-ID"])]
+
+
+@override_settings(TRACEID={"SENTRY_TAG": True})
+def test_sentry_tag_uses_isolation_scope_when_available(client, monkeypatch):
+    # Modern sentry-sdk (>=2.0) exposes get_isolation_scope: the tag must land
+    # on the per-request scope, not the global one.
+    import sys
+    import types
+
+    calls: list[tuple[str, str]] = []
+
+    class _Scope:
+        def set_tag(self, key: str, value: str) -> None:
+            calls.append((key, value))
+
+    scope = _Scope()
+    fake_sentry = types.ModuleType("sentry_sdk")
+    fake_sentry.get_isolation_scope = lambda: scope
+    fake_sentry.set_tag = lambda key, value: calls.append(("GLOBAL", value))
+    monkeypatch.setitem(sys.modules, "sentry_sdk", fake_sentry)
+
+    resp = client.get("/echo/")
+
+    assert resp.status_code == 200
+    # Isolation-scope path used; global set_tag never touched.
+    assert calls == [("trace_id", resp["X-Request-ID"])]
