@@ -29,11 +29,11 @@ jobs:
         timeout-minutes: 15
         steps:
             - name: Checkout
-              uses: actions/checkout@v7.0.1
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
                   fetch-depth: 0
             - name: SonarCloud scan
-              uses: chrysa/github-actions/sonar-scan-python@v1.4.4
+              uses: chrysa/github-actions/sonar-scan-python@v1.8.1
               with:
                   python-version: "3.14"
                   sonar-token: ${{ secrets.SONAR_TOKEN }}
