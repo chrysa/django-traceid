@@ -21,7 +21,7 @@ jobs:
     # once per release. Lint no longer runs on every PR/push (see ci.yml).
     lint:
         name: Lint gate (pre-commit replay)
-        uses: chrysa/github-actions/.github/workflows/lint-python.yml@v1.8.1
+        uses: chrysa/github-actions/.github/workflows/lint-python.yml@v1.4.4
         with:
             python-version: "3.14"
             extras: "dev"
@@ -36,13 +36,13 @@ jobs:
             preReleaseTag: ${{ steps.gitversion.outputs.preReleaseTag }}
             should-release: ${{ steps.tag-check.outputs.should-release }}
         steps:
-            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: actions/checkout@v7.0.1
               with:
                   fetch-depth: 0
 
             - name: Determine version
               id: gitversion
-              uses: chrysa/github-actions/gitversion@v1.8.1
+              uses: chrysa/github-actions/gitversion@v1.4.4
 
             - name: Check if version tag already exists
               id: tag-check
@@ -63,8 +63,11 @@ jobs:
         if: needs.version.outputs.should-release == 'true' && needs.version.outputs.preReleaseTag == ''
         runs-on: ubuntu-latest
         timeout-minutes: 20
+        permissions:
+            contents: write
+            id-token: write
         steps:
-            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: actions/checkout@v7.0.1
               with:
                   fetch-depth: 0
                   token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
@@ -75,16 +78,22 @@ jobs:
                   git config user.email 'greau.anthony+chrysa@gmail.com'
 
             - name: Install git-cliff
-              uses: taiki-e/install-action@e215f18e24d7f4b411833009234c054235f9447f # git-cliff
+              uses: taiki-e/install-action@3f99142a47f5f35fcd7322b74947248526d32622 # git-cliff
 
             - name: Generate changelog
               run: git-cliff -o CHANGELOG.md
 
-            - name: Build & publish to PyPI
-              uses: chrysa/github-actions/publish-python-package@v1.8.1
+            - name: Set up Python
+              uses: actions/setup-python@v6
               with:
-                  pypi-token: ${{ secrets.PYPI_TOKEN }}
-                  build-backend: setuptools
+                  python-version: '3.14'
+
+            - name: Build distribution
+              shell: bash
+              run: pipx run build
+
+            - name: Publish to PyPI (OIDC Trusted Publishing)
+              uses: pypa/gh-action-pypi-publish@release/v1
 
             - name: Tag & push release
               run: |
