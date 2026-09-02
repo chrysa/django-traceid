@@ -42,7 +42,7 @@ jobs:
 
             - name: Determine version
               id: gitversion
-              uses: chrysa/github-actions/gitversion@v1.8.1
+              uses: chrysa/github-actions/gitversion@v1.8.2
 
             - name: Check if version tag already exists
               id: tag-check
