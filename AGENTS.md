@@ -87,6 +87,7 @@ SonarCloud rating A. Max function 50 lines, max file 500 lines.
 ### Documentation & session state · `standards/rules/docs.md`
 - Notion logging
 - Documentation and Notion are maintained in lockstep with the code — a change that leaves them stale is unfinished
+- Every repo ships generated context files
 - Session lifecycle (primer + memory + hindsight)
 
 ### AI agents & features · `standards/rules/agents.md`

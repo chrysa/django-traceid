@@ -1,0 +1,35 @@
+{
+  "adrs": [],
+  "contracts": [
+    "standards"
+  ],
+  "ddd_level": "(not available)",
+  "dependencies": {
+    "python": [
+      "Django",
+      "django-stubs",
+      "mypy",
+      "pytest",
+      "pytest-cov",
+      "pytest-django",
+      "ruff"
+    ]
+  },
+  "depends_on_shared_standards": true,
+  "description": "Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logging, background jobs)",
+  "entry_points": [],
+  "key_directories": [
+    ".claude",
+    ".github",
+    "docs",
+    "examples",
+    "legal",
+    "scripts",
+    "src",
+    "standards",
+    "tests"
+  ],
+  "name": "django-traceid",
+  "profiles": [],
+  "schema": "chrysa.context-map/1"
+}
