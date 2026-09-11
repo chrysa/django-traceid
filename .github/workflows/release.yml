@@ -21,7 +21,7 @@ jobs:
     # once per release. Lint no longer runs on every PR/push (see ci.yml).
     lint:
         name: Lint gate (pre-commit replay)
-        uses: chrysa/github-actions/.github/workflows/lint-python.yml@v1.8.2
+        uses: chrysa/github-actions/.github/workflows/lint-python.yml@v1.9.0
         with:
             python-version: "3.14"
             extras: "dev"
@@ -42,7 +42,7 @@ jobs:
 
             - name: Determine version
               id: gitversion
-              uses: chrysa/github-actions/gitversion@v1.8.2
+              uses: chrysa/github-actions/gitversion@v1.9.0
 
             - name: Check if version tag already exists
               id: tag-check
@@ -104,7 +104,7 @@ jobs:
                   git push origin HEAD --tags
 
             - name: Create GitHub Release
-              uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
+              uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
               with:
                   tag_name: v${{ needs.version.outputs.majorMinorPatch }}
                   body_path: CHANGELOG.md
