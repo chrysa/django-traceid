@@ -104,7 +104,6 @@ Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logg
     action-check.yml
     approved-label.yml
     auto-assign.yml
-    auto-update-pre-commit.yml
     ci.yml
     dependabot-auto-merge.yml
     detect-conflicts.yml
@@ -155,6 +154,7 @@ legal/
 opencode.json
 pyproject.toml
 scripts/
+  gen_context_files.py
   quality_gate.py
 src/
   django_traceid/
@@ -216,6 +216,7 @@ examples/demo/manage.py
 examples/demo/orders/__init__.py
 examples/demo/orders/apps.py — AppConfig for the demo orders app.
 examples/demo/orders/views.py — Demo views that emit a few log lines per request.
+scripts/gen_context_files.py — Generate the standardised per-repo context files from the repo's own content.
 scripts/quality_gate.py
 src/django_traceid/__init__.py — django-traceid — end-to-end request/trace id propagation for Django.
 src/django_traceid/apps.py — Django application configuration.
