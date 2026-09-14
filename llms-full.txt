@@ -108,6 +108,7 @@ Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logg
     dependabot-auto-merge.yml
     detect-conflicts.yml
     enforce-feature-branch.yml
+    enforce-shortcut-link.yml
     labeler.yml
     pr-dependencies.yml
     pull-request-size.yml
