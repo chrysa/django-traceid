@@ -9,6 +9,7 @@ Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logg
 
 .claude/
   agents/
+    async-middleware-reviewer.md
     general-backend-developer.md
     general-code-quality-debugger.md
     general-devops.md
@@ -34,7 +35,9 @@ Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logg
   hooks/
     check-no-env-files.cjs
     circuit-breaker.cjs
+    claude-config-drift.cjs
     frustration-detection.cjs
+    graphify-auto-update.cjs
     secret-scanner.cjs
     verifiable-thresholds.cjs
   rules/
@@ -77,11 +80,15 @@ Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logg
       SKILL.md
     plan/
       SKILL.md
+    release-changelog/
+      SKILL.md
     spec/
       SKILL.md
     standards-authoring/
       SKILL.md
     testing-pytest/
+      SKILL.md
+    traceid-propagation-check/
       SKILL.md
     ui-ux/
       SKILL.md
@@ -122,6 +129,7 @@ Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logg
 .mcp.json
 .pre-commit-config.yaml
 AGENTS.md
+ARCHITECTURE.md
 CHANGELOG.md
 CLAUDE.md
 CODEOWNERS
@@ -172,6 +180,7 @@ standards/
     README.md
     accessibility.md
     agents.md
+    ai-orchestration.md
     api.md
     architecture.md
     backend-python.md
