@@ -82,6 +82,8 @@ Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logg
       SKILL.md
     release-changelog/
       SKILL.md
+    rollout-status/
+      SKILL.md
     spec/
       SKILL.md
     standards-authoring/
@@ -96,6 +98,7 @@ Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logg
       SKILL.md
   thresholds.json
 .editorconfig
+.env.example
 .gitattributes
 .github/
   CODEOWNERS
