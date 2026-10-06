@@ -1,7 +1,10 @@
 # makefile-tier: lib
 .DEFAULT_GOAL := help
 
-.PHONY: help install dev test test-cov lint format typecheck docker-test build pre-commit clean
+MATRIX_PYTHON ?= 3.13 3.14
+MATRIX_DJANGO ?= 5.2 6.0
+
+.PHONY: help install dev test test-cov lint format typecheck docker-test docker-test-matrix build pre-commit clean
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | \
@@ -38,6 +41,14 @@ docker-test: ## Run tests in Docker (CI-compatible)
 	@touch coverage.xml
 	docker build -f Dockerfile.test -t django-traceid-test .
 	docker run --rm -v "$(PWD)/coverage.xml:/app/coverage.xml" django-traceid-test
+
+docker-test-matrix: ## Run tests in Docker across Python x Django (override MATRIX_PYTHON / MATRIX_DJANGO)
+	@fail=0; for py in $(MATRIX_PYTHON); do for dj in $(MATRIX_DJANGO); do \
+		echo "=== Python $$py / Django $$dj ==="; \
+		rm -rf coverage.xml; touch coverage.xml; \
+		docker build -q -f Dockerfile.test --build-arg PYTHON_VERSION=$$py --build-arg DJANGO_VERSION=$$dj -t django-traceid-test:$$py-$$dj . >/dev/null \
+		&& docker run --rm -v "$(PWD)/coverage.xml:/app/coverage.xml" django-traceid-test:$$py-$$dj || fail=1; \
+	done; done; exit $$fail
 
 build: ## Build wheel distribution package
 	python -m build

@@ -1,6 +1,10 @@
 # Test image — runs the full suite with coverage gate (CI parity).
 # Built and run by `make docker-test`.
-FROM python:3.14-slim
+# Overridable for the local compatibility matrix (`make docker-test-matrix`);
+# defaults keep CI parity (latest Python, latest Django).
+ARG PYTHON_VERSION=3.14
+FROM python:${PYTHON_VERSION}-slim
+ARG DJANGO_VERSION=
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
@@ -14,6 +18,9 @@ COPY src/ ./src/
 COPY tests/ ./tests/
 
 RUN pip install --no-cache-dir -e ".[dev]"
+
+# Pin a specific Django minor (e.g. 5.2) when DJANGO_VERSION is set.
+RUN if [ -n "$DJANGO_VERSION" ]; then pip install --no-cache-dir "django==${DJANGO_VERSION}.*"; fi
 
 # pytest-cov (configured in pyproject addopts: --cov + --cov-fail-under=85)
 # owns coverage; just add the XML report for SonarCloud.
