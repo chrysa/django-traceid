@@ -1,3 +1,5 @@
+@AGENTS.md
+
 # CLAUDE.md — django-traceid
 
 > @[claude-sonnet-4-6]
@@ -57,13 +59,7 @@ All checks run via `make` or `pre-commit` only — never invoke linters/tests di
 
 ## graphify
 
-This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
-
-Rules:
-- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
-- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
-- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
-- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+Follow the /graphify skill.
 
 <!-- chrysa:standards:start · managed by distribute-standards.sh · DO NOT EDIT -->
 # chrysa — Transverse Standards (core)
@@ -132,8 +128,6 @@ Rules:
 - Agent actions are governed
 - An AI feature is evaluated, not just shipped
 - An agent writes only where the owner owns
-- A retryable operation proves the retry has no external effects
-- A mass-mutation batch returns the explicit list of what it changed
 
 ### Security, identity & sessions · `standards/rules/security.md`
 - Per-person data implies a user account — no exceptions dressed up as simplicity
@@ -157,14 +151,6 @@ Rules:
 - A cache is a correctness contract, not a sprinkle of speed
 - Quality gates
 - Error handling pattern (all automations)
-
-### Product surfaces · `standards/rules/product.md`
-- A public web surface is legally compliant, consent-respecting, and operable — before it ships
-- Setup wizard & config panel
-- A game is DRM-free and fully playable solo offline
-- Every product that is operated ships a management backoffice
-- If a user can supply a file, the product accepts an upload
-- A floating assistant where it earns its place — never as decoration
 
 ### Backend Python · `standards/rules/backend-python.md`
 - Python packaging — `pyproject.toml` is the single source of truth
@@ -195,6 +181,13 @@ Rules:
 - `.dockerignore` mandatory & exhaustive
 - Container-runtime policy
 
+### Product surfaces · `standards/rules/product.md`
+- Setup wizard & config panel
+- A game is DRM-free and fully playable solo offline
+- Every product that is operated ships a management backoffice
+- If a user can supply a file, the product accepts an upload
+- A floating assistant where it earns its place — never as decoration
+
 ### Design system · `standards/rules/design.md`
 - Design system
 
@@ -206,7 +199,4 @@ Rules:
 - Release & changelog config (canonical)
 - GitHub Actions (reuse first · custom actions centralised · thin workflows)
 - Pre-commit & git hooks (native, via pre-commit.com — never wrapped in make)
-
-### Local AI orchestration & local-first · `standards/rules/ai-orchestration.md`
-- AI orchestration & local-first
 <!-- chrysa:standards:end -->
