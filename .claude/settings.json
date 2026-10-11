@@ -216,5 +216,7 @@
   "attribution": {
     "commit": "",
     "pr": ""
-  }
+  },
+  "model": "haiku",
+  "effortLevel": "low"
 }
