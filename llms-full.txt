@@ -34,7 +34,10 @@ Project-agnostic, end-to-end trace/request id propagation for Django (HTTP, logg
     format.py
     frustration-detection.cjs
     graphify-auto-update.cjs
+    pre-compact.sh
+    read_guard.py
     secret-scanner.cjs
+    session-context.sh
     verifiable-thresholds.cjs
   rules/
     folder-readme.md
@@ -228,13 +231,14 @@ tests/
 
 license: MIT
 name: django-traceid
-requires-python: >=3.12
-version: 0.1.0
+requires-python: >=3.13
+version: 0.1.0a1
 
 ## Modules
 
 .claude/ape/ape_hook.py
 .claude/hooks/format.py
+.claude/hooks/read_guard.py
 examples/demo/demo_project/__init__.py
 examples/demo/demo_project/settings.py — Minimal Django settings for the django-traceid demo project.
 examples/demo/demo_project/urls.py — URL configuration for the demo project.
