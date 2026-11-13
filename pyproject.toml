@@ -81,13 +81,13 @@ extend-exclude = ["build/*", "dist/*", "*.egg-info/*", ".venv/*", "venv/*", "exa
 
 [tool.ruff.lint]
 # Aligned with chrysa shared-standards ruff rule set.
-select = ["E", "W", "F", "I", "N", "UP", "B", "C4", "C90", "S", "DJ", "TID", "FURB", "RUF", "PERF203", "PERF401", "PLR0402", "PLR0911", "PLR0912", "PLR0915", "PLR1714", "PLR1730", "PLR5501", "PLR2004"]
+select = ["E", "W", "F", "I", "N", "UP", "B", "C4", "C90", "S", "DJ", "TID", "FURB", "RUF", "PERF203", "PERF401", "PLR0402", "PLR0911", "PLR0912", "PLR0915", "PLR1714", "PLR1730", "PLR5501", "PLR2004", "T100", "T203", "LOG015", "ASYNC210", "ASYNC212", "ASYNC220", "ASYNC221", "ASYNC222", "ASYNC230", "ASYNC251"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101"] # asserts are expected in tests
-"**/tests/**" = ["PLR2004"]
-"**/test_*.py" = ["PLR2004"]
-"**/conftest.py" = ["PLR2004"]
+"**/tests/**" = ["PLR2004", "T203"]
+"**/test_*.py" = ["PLR2004", "T203"]
+"**/conftest.py" = ["PLR2004", "T203"]
 [tool.mypy]
 python_version = "3.12"
 strict = true
