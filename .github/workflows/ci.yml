@@ -90,7 +90,7 @@ jobs:
                   project-key: chrysa_django-traceid
                   organization: chrysa
                   project-name: django-traceid
-                  sources: django_traceid
+                  sources: src/django_traceid
                   tests: tests
                   # Downloaded from the test-results-3.14 artifact into reports/
                   # by the action; matches sonar-scan-python's default path.
